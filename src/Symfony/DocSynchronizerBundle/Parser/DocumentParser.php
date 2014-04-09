@@ -84,8 +84,9 @@ class DocumentParser
             $previousLine = $line;
         }
 
-        if ($previous instanceof Chapter) {
+        while ($previous instanceof Chapter) {
             $previous->setLineEnd($lineNumber - 1);
+            $previous = $previous->getParent();
         }
 
         return $file;

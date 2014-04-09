@@ -67,7 +67,7 @@ class Chapter extends Node
 
     public function toStringSuffix()
     {
-        if (!$this->lastModification) {
+        if (!$this->lastModification->getDate()) {
             return;
         }
 
