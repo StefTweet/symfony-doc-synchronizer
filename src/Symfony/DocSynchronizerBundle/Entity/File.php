@@ -6,20 +6,6 @@ use Symfony\DocSynchronizerBundle\Exception\InvalidTypeException;
 
 class File extends Node
 {
-    private $name;
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
     /**
      * {@inheritdoc}
      */

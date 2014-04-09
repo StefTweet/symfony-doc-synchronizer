@@ -12,7 +12,7 @@ abstract class Node
     /**
      * @var Node[]
      */
-    private $children;
+    private $children = array();
 
     /**
      * @var string
@@ -76,5 +76,22 @@ abstract class Node
         $child->setParent($this);
 
         return $this;
+    }
+
+    public function toString($level = 0)
+    {
+        $padding = str_repeat('  ', $level);
+
+        $result = $padding.$this->name."\n";
+        foreach ($this->children as $child) {
+            $result .= $child->toString($level + 1);
+        }
+
+        return $result;
+    }
+
+    public function __toString()
+    {
+        return $this->toString();
     }
 }
