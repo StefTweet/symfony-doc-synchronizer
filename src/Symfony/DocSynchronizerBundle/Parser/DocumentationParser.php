@@ -99,5 +99,9 @@ class DocumentationParser
         $chapter->getLastModification()->setAuthor($comm->getCommitterName());
         $chapter->getLastModification()->setMessage($comm->getShortMessage());
         $chapter->getLastModification()->setHash($comm->getHash());
+
+        foreach ($chapter->getChildren() as $child) {
+            $this->updateLastModifiedChapter($child, $blame);
+        }
     }
 }
