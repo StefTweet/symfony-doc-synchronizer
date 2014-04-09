@@ -18,7 +18,7 @@ class DocService
     /**
      * @return Directory
      */
-    public function getDocumentation($version, $locale = null, $refresh = false)
+    public function getDocumentation($version, $locale = 'en', $refresh = false)
     {
         $targetDir = $this->getCacheDir($locale);
         if (!is_dir($targetDir)) {

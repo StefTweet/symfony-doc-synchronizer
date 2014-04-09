@@ -14,6 +14,10 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return array();
+        $files = $this->container->get('doc')->getDocumentation('master');
+
+        return array(
+            'files' => $files->getChildren(),
+        );
     }
 }
