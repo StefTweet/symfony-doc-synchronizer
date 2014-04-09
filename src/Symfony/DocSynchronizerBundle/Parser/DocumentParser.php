@@ -60,7 +60,7 @@ class DocumentParser
             if (null !== $level && strlen($previousLine) === strlen($line)) {
                 $chapter = new Chapter();
                 $chapter->setParent($previous);
-                $chapter->setName($previousLine);
+                $chapter->setName(trim($previousLine));
                 $chapter->setLineStart($lineNumber - 1);
 
                 if ($previousLevel < $level) {
