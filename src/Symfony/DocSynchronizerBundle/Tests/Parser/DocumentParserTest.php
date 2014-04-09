@@ -62,6 +62,6 @@ Paragraph");
             'H1-2' => array(
                 'H2' => array(),
             ),
-        ), $ast, 'AST must have one head title and one pagraph title');
+        ), $file, 'AST must have one head title and one pagraph title');
     }
 }

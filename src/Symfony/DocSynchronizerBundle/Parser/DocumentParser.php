@@ -7,7 +7,7 @@ use Symfony\DocSynchronizerBundle\Entity\File;
 
 class DocumentParser
 {
-    const LEVEL_PATTERN = "=-`:'";
+    const LEVEL_PATTERN = '=-`:\'"~';
 
     protected $levels;
 
@@ -23,7 +23,7 @@ class DocumentParser
 
     protected function addLevel($character)
     {
-        return array_push($this->levels, $character);
+        return array_push($this->levels, $character) - 1;
     }
 
     protected function getLevel($line)
@@ -55,9 +55,9 @@ class DocumentParser
         $previousLine = null;
 
         foreach(explode(PHP_EOL, $text) as $lineNumber => $line) {
-            $level = $this->getLevel($line);
+            $level = $this->getLevel($line, $previousLine);
 
-            if (null !== $level && strlen($previousLine) === strlen($line)) {
+            if (null !== $level && $line === str_repeat($this->levels[$level], strlen($previousLine))) {
                 $chapter = new Chapter();
                 $chapter->setParent($previous);
                 $chapter->setName(trim($previousLine));
