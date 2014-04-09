@@ -2,8 +2,10 @@
 
 namespace Symfony\DocSynchronizerBundle\Entity;
 
-class Directory extends DirectoryElement
+class Directory extends Node
 {
+    private $name = '';
+
     /**
      * {@inheritdoc}
      */

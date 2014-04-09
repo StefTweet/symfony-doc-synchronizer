@@ -15,11 +15,28 @@ abstract class Node
     private $children;
 
     /**
+     * @var string
+     */
+    private $name;
+
+    /**
      * @return Node|null
      */
     public function getParent()
     {
         return $this->parent;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -56,6 +73,7 @@ abstract class Node
     public function addChild(Node $child)
     {
         $this->children[] = $child;
+        $child->setParent($this);
 
         return $this;
     }
