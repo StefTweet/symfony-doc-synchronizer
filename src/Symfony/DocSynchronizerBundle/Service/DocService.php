@@ -27,9 +27,17 @@ class DocService
             $repository = new Repository($targetDir);
         }
 
-        $parser = new DocumentationParser();
+        $cacheFile = $this->cacheDir.'/cache_'.$version.'_'.$locale;
 
-        return $parser->parse($repository, $version);
+        if (!file_exists($cacheFile)) {
+            $parser = new DocumentationParser();
+            $documentation = $parser->parse($repository, $version);
+            file_put_contents($cacheFile, serialize($documentation));
+        } else {
+            $documentation = unserialize(file_get_contents($cacheFile));
+        }
+
+        return $documentation;
     }
 
     private function getCacheDir($locale)
@@ -59,5 +67,15 @@ class DocService
         $url = $urls[$locale];
 
         return Admin::cloneTo($target, $url);
+    }
+
+    public function getLanguages()
+    {
+        return array('en', 'fr');
+    }
+
+    public function getVersions($language)
+    {
+        return array('master', '2.4', '2.3', '2.2', '2.1');
     }
 }
