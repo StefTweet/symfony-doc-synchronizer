@@ -18,18 +18,19 @@ class DocService
     /**
      * @return Directory
      */
-    public function getDocumentation($version, $locale = null)
+    public function getDocumentation($version, $locale = null, $refresh = false)
     {
         $targetDir = $this->getCacheDir($locale);
         if (!is_dir($targetDir)) {
             $repository = $this->cloneRepository($targetDir, $locale);
         } else {
             $repository = new Repository($targetDir);
+            $repository->run('fetch');
         }
 
         $cacheFile = $this->cacheDir.'/cache_'.$version.'_'.$locale;
 
-        if (!file_exists($cacheFile)) {
+        if ($refresh || !file_exists($cacheFile)) {
             $parser = new DocumentationParser();
             $documentation = $parser->parse($repository, $version);
             file_put_contents($cacheFile, serialize($documentation));

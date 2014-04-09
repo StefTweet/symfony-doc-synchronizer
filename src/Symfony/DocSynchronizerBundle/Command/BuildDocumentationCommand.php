@@ -21,9 +21,16 @@ class BuildDocumentationCommand extends ContainerAwareCommand
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $docService = $this->getContainer()->get('doc');
+        $doc = $this->getContainer()->get('doc');
+        $languages = $doc->getLanguages();
 
-        $doc = $docService->getDocumentation('2.4', 'fr');
-        $output->writeln((string) $doc);
+        foreach ($languages as $language) {
+            $versions = $doc->getVersions($language);
+            foreach ($versions as $version) {
+                $output->write(sprintf('Updating %s/%s...', $language, $version));
+                $doc->getDocumentation($version, $language, true);
+                $output->writeln('OK');
+            }
+        }
     }
 }

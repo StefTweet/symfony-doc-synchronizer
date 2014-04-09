@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "93ff3411dc5b67d9ba4942138bcfc722",
+    "hash": "da8d68a288a2b3d70af239625e8719fb",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -626,20 +626,20 @@
         },
         {
             "name": "gitonomy/gitlib",
-            "version": "v0.1.5",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/gitonomy/gitlib.git",
-                "reference": "158879a951ca47913a6a3ff2e916aaac0e372cc8"
+                "reference": "b399fe8cc538cb43cc83b20c2e65959b4f279de9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gitonomy/gitlib/zipball/158879a951ca47913a6a3ff2e916aaac0e372cc8",
-                "reference": "158879a951ca47913a6a3ff2e916aaac0e372cc8",
+                "url": "https://api.github.com/repos/gitonomy/gitlib/zipball/b399fe8cc538cb43cc83b20c2e65959b4f279de9",
+                "reference": "b399fe8cc538cb43cc83b20c2e65959b4f279de9",
                 "shasum": ""
             },
             "require": {
-                "symfony/process": "<3"
+                "symfony/process": "~2.4"
             },
             "require-dev": {
                 "psr/log": "~1"
@@ -674,7 +674,7 @@
             ],
             "description": "Library for accessing git",
             "homepage": "http://gitonomy.com",
-            "time": "2014-02-16 23:28:00"
+            "time": "2014-04-01 14:20:00"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -1620,9 +1620,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "gitonomy/gitlib": 20
+    },
     "platform": {
         "php": ">=5.3.3"
     },

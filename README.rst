@@ -3,6 +3,16 @@ Symfony Doc Synchronizer
 
 Aims to ease translation process of Symfony documentation.
 
+Generate cache
+--------------
+
+This project needs to warm cache, to have metadatas of documentation.
+
+Run it:
+
+.. code-block:: bash
+
+    php app/console symfony:build-documentation
 
 Backlog
 -------
