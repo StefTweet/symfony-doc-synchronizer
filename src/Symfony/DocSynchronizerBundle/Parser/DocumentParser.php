@@ -7,61 +7,85 @@ use Symfony\DocSynchronizerBundle\Entity\File;
 
 class DocumentParser
 {
-    CONST LEVEL_H1 = '=';
-    CONST LEVEL_H2 = '-';
-    CONST LEVEL_H3 = '`';
-    const LEVEL_H4 = ':';
-    const LEVEL_H5 = "'";
+    const LEVEL_PATTERN = "=-`:'";
 
-    protected static function getLevels()
+    protected $levels;
+
+    public function __construct()
     {
-        return array(
-            self::LEVEL_H1 => 1,
-            self::LEVEL_H2 => 2,
-            self::LEVEL_H3 => 3,
-            self::LEVEL_H4 => 4,
-            self::LEVEL_H5 => 5,
-        );
+        $this->levels = array();
     }
+
+    protected function getLevels()
+    {
+        $this->levels;
+    }
+
+    protected function addLevel($character)
+    {
+        return array_push($this->levels, $character);
+    }
+
+    protected function getLevel($line)
+    {
+        if (strlen($line) === 0) {
+            return;
+        }
+
+        foreach ($this->levels as $level => $character) {
+            if ($line[0] === $character) {
+                return $level;
+            }
+        }
+
+        $pattern = self::LEVEL_PATTERN;
+        for ($i = 0; $i < strlen($pattern); $i++) {
+            if ($line[0] === $pattern[$i]) {
+                return $this->addLevel($pattern[$i]);
+            }
+        }
+
+        return null;
+    }
+
     public function parse(File $file, $text)
     {
-
         $previous = $file;
         $previousLevel = 0;
         $previousLine = null;
 
         foreach(explode(PHP_EOL, $text) as $lineNumber => $line) {
-            foreach (self::getLevels() as $character => $level) {
-                if (isset($line[0]) && $character === $line[0]) {
-                    $chapter = new Chapter();
-                    $chapter->setParent($previous);
-                    $chapter->setName($previousLine);
-                    $chapter->setLineStart($lineNumber - 1);
+            $level = $this->getLevel($line);
 
-                    if ($previousLevel < $level) {
-                        $previous->addChild($chapter);
-                    } else {
-                        $diff = $previousLevel - $level;
-                        for ($i = $previousLevel; $i >= $level; $i--) {
-                            if ($previous instanceof Chapter) {
-                                $previous->setLineEnd($lineNumber);
-                                $previous = $previous->getParent();
-                            }
+            if (null !== $level && strlen($previousLine) === strlen($line)) {
+                $chapter = new Chapter();
+                $chapter->setParent($previous);
+                $chapter->setName($previousLine);
+                $chapter->setLineStart($lineNumber - 1);
+
+                if ($previousLevel < $level) {
+                    $previous->addChild($chapter);
+                } else {
+                    $diff = $previousLevel - $level;
+                    for ($i = $previousLevel; $i >= $level; $i--) {
+                        if ($previous instanceof Chapter) {
+                            $previous->setLineEnd($lineNumber);
+                            $previous = $previous->getParent();
                         }
-
-                        $previous->addChild($chapter);
                     }
 
-                    $previousLevel = $level;
-                    $previous = $chapter;
+                    $previous->addChild($chapter);
                 }
 
-                if ($previous instanceof Chapter) {
-                    $previous->setLineEnd($lineNumber - 1);
-                }
-
-                $previousLine = $line;
+                $previousLevel = $level;
+                $previous = $chapter;
             }
+
+            $previousLine = $line;
+        }
+
+        if ($previous instanceof Chapter) {
+            $previous->setLineEnd($lineNumber - 1);
         }
 
         return $file;

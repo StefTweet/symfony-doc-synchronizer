@@ -2,22 +2,27 @@
 
 namespace Symfony\DocSynchronizerBundle\Tests\Parser;
 
+use Symfony\DocSynchronizerBundle\Entity\File;
 use Symfony\DocSynchronizerBundle\Parser\DocumentParser;
 
 class DocumentParserTest extends \PHPUnit_Framework_TestCase
 {
     public function testParseEmptyDocument()
     {
+        $file = new File();
         $parser = new DocumentParser();
-        $ast = $parser->parse('');
+        $parser->parse($file, '');
 
-        $this->assertSame(array(), $ast, 'AST from empty document should be empty');
+        $this->assertSame('
+', $file->toString(), 'AST from empty document should be empty');
     }
 
     public function testParseDocument()
     {
+        $file = new File();
         $parser = new DocumentParser();
-        $ast = $parser->parse("H1-1
+
+        $parser->parse($file, "H1-1
 ====
 
 Paragraph
