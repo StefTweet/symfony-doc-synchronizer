@@ -6,6 +6,9 @@ use Symfony\DocSynchronizerBundle\Exception\InvalidTypeException;
 
 class Document extends Node
 {
+    /**
+     * {@inheritdoc}
+     */
     public function addChild($child)
     {
         if (!$child instanceof Chapter) {

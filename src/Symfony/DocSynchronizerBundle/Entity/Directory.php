@@ -4,6 +4,9 @@ namespace Symfony\DocSynchronizerBundle\Entity;
 
 class Directory extends DirectoryElement
 {
+    /**
+     * {@inheritdoc}
+     */
     public function addChild($child)
     {
         if (!$child instanceof Directory && !$child instanceof Document) {

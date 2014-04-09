@@ -18,4 +18,16 @@ class Chapter extends Node
      * @var DateTime
      */
     private $lastModification;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addChild($child)
+    {
+        if (!$child instanceof Chapter) {
+            throw new InvalidTypeException('Chapter', $child);
+        }
+
+        return parent::addChild($child);
+    }
 }
