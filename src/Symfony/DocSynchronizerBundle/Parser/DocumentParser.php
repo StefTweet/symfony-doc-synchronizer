@@ -2,6 +2,9 @@
 
 namespace Symfony\DocSynchronizerBundle\Parser;
 
+use Symfony\DocSynchronizerBundle\Entity\Chapter;
+use Symfony\DocSynchronizerBundle\Entity\File;
+
 class DocumentParser
 {
     CONST LEVEL_H1 = '=';
@@ -10,33 +13,55 @@ class DocumentParser
     const LEVEL_H4 = ':';
     const LEVEL_H5 = "'";
 
+    protected static function getLevels()
+    {
+        return array(
+            self::LEVEL_H1 => 1,
+            self::LEVEL_H2 => 2,
+            self::LEVEL_H3 => 3,
+            self::LEVEL_H4 => 4,
+            self::LEVEL_H5 => 5,
+        );
+    }
     public function parse($text)
     {
-        $ast = array();
 
-        $previousLine = '';
-        $h1 = null;
-        $h2 = null;
-        $h3 = null;
-        foreach(explode(PHP_EOL, $text) as $lineNumber => $line){
-            if (isset($line[0]) && self::LEVEL_H1 === $line[0]) {
-                $ast[$previousLine] = array();
-                $h1 = $previousLine;
+        $file = new File();
+        $previous = $file;
+        $previousLevel = 0;
+        $previousLine = null;
+
+        foreach(explode(PHP_EOL, $text) as $lineNumber => $line) {
+            foreach (self::getLevels() as $character => $level) {
+                if (isset($line[0]) && $character === $line[0]) {
+                    $chapter = new Chapter();
+                    $chapter->setParent($previous);
+                    $chapter->setName($previousLine);
+                    $chapter->setLineStart($lineNumber - 1);
+
+                    if ($previousLevel < $level) {
+                        $previous->addChild($chapter);
+                    } else {
+                        $diff = $previousLevel - $level;
+                        for ($i = $previousLevel; $i >= $level; $i--) {
+                            $previous->setLineEnd($lineNumber);
+                            $previous = $previous->getParent();
+                        }
+                        $previous->addChild($chapter);
+                    }
+
+                    $previousLevel = $level;
+                    $previous = $chapter;
+                }
+
+                if ($previous instanceof Chapter) {
+                    $previous->setLineEnd($lineNumber - 1);
+                }
+
+                $previousLine = $line;
             }
+        }
 
-            if (isset($line[0]) && self::LEVEL_H2 === $line[0]) {
-                $ast[$h1][$previousLine] = array();
-                $h2 = $previousLine;
-            }
-
-            if (isset($line[0]) && self::LEVEL_H3 === $line[0]) {
-                $ast[$h1][$h2][$previousLine] = array();
-                $h3 = $previousLine;
-            }
-
-            $previousLine = $line;
-        } 
-
-        return $ast;
+        return $file;
     }
 }

@@ -30,4 +30,28 @@ class Chapter extends Node
 
         return parent::addChild($child);
     }
+
+    public function getLineStart()
+    {
+        return $this->lineStart;
+    }
+
+    public function setLineStart($lineStart)
+    {
+        $this->lineStart = $lineStart;
+
+        return $this;
+    }
+
+    public function getLineEnd()
+    {
+        return $this->lineEnd;
+    }
+
+    public function setLineEnd($lineEnd)
+    {
+        $this->lineEnd = $lineEnd;
+
+        return $this;
+    }
 }

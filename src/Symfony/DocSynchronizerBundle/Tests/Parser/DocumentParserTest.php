@@ -17,8 +17,8 @@ class DocumentParserTest extends \PHPUnit_Framework_TestCase
     public function testParseDocument()
     {
         $parser = new DocumentParser();
-        $ast = $parser->parse("H1
-==
+        $ast = $parser->parse("H1-1
+====
 
 Paragraph
 
@@ -38,14 +38,25 @@ Paragraph
 H5
 ''
 
+Paragraph
+
+H1-2
+====
+
+H2
+--
+
 Paragraph");
 
         $this->assertSame(array(
-            'H1' => array(
+            'H1-1' => array(
                 'H2' => array(
-                    'H3' => array()
-                )
-            )
+                    'H3' => array(),
+                ),
+            ),
+            'H1-2' => array(
+                'H2' => array(),
+            ),
         ), $ast, 'AST must have one head title and one pagraph title');
     }
 }
