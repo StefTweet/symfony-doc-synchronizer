@@ -37,4 +37,9 @@ class Directory extends Node
 
         return $dir;
     }
+
+    public function toStringSuffix()
+    {
+        return '/';
+    }
 }

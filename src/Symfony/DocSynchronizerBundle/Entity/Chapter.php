@@ -54,4 +54,21 @@ class Chapter extends Node
 
         return $this;
     }
+
+    public function getLastModification()
+    {
+        return $this->lastModification;
+    }
+
+    public function setLastModification(\DateTime $lastModification)
+    {
+        $this->lastModification = $lastModification;
+
+        return $this;
+    }
+
+    public function toStringSuffix()
+    {
+        return '('.$this->lastModification->format('Y-m-d H:i:s').')';
+    }
 }

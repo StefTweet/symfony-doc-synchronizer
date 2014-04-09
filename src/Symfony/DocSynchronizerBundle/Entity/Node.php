@@ -82,12 +82,17 @@ abstract class Node
     {
         $padding = str_repeat('  ', $level);
 
-        $result = $padding.$this->name."\n";
+        $result = $padding.$this->name.$this->toStringSuffix()."\n";
         foreach ($this->children as $child) {
             $result .= $child->toString($level + 1);
         }
 
         return $result;
+    }
+
+    public function toStringSuffix()
+    {
+        return '';
     }
 
     public function __toString()
