@@ -9,7 +9,7 @@ class Directory extends Node
     /**
      * {@inheritdoc}
      */
-    public function addChild($child)
+    public function addChild(Node $child)
     {
         if (!$child instanceof Directory && !$child instanceof Document) {
             throw new InvalidTypeException('Directory|Document', $child);
