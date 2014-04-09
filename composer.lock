@@ -630,12 +630,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gitonomy/gitlib.git",
-                "reference": "b399fe8cc538cb43cc83b20c2e65959b4f279de9"
+                "reference": "23cd98bbf8d632892fce8a08ece2f180a3c03661"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gitonomy/gitlib/zipball/b399fe8cc538cb43cc83b20c2e65959b4f279de9",
-                "reference": "b399fe8cc538cb43cc83b20c2e65959b4f279de9",
+                "url": "https://api.github.com/repos/gitonomy/gitlib/zipball/23cd98bbf8d632892fce8a08ece2f180a3c03661",
+                "reference": "23cd98bbf8d632892fce8a08ece2f180a3c03661",
                 "shasum": ""
             },
             "require": {
@@ -674,7 +674,7 @@
             ],
             "description": "Library for accessing git",
             "homepage": "http://gitonomy.com",
-            "time": "2014-04-01 14:20:00"
+            "time": "2014-04-09 14:47:06"
         },
         {
             "name": "incenteev/composer-parameter-handler",
