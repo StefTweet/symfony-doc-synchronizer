@@ -20,4 +20,28 @@ class DefaultController extends Controller
             'files' => $files->getChildren(),
         );
     }
+
+    /**
+     * @Route("/files/{filename}", name="symfony_doc_synchronizer_default_file")
+     * @Template()
+     */
+    public function fileAction($filename)
+    {
+        $files = $this->container->get('doc')->getDocumentation('master');
+
+        $current = null;
+        foreach ($files->getChildren() as $file) {
+            if ($file->getName() === $filename) {
+                $current = $file;
+            }
+        }
+
+        if (null === $current) {
+            throw $this->createNotFoundException();
+        }
+
+        return array(
+            'file' => $current,
+        );
+    }
 }

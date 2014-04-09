@@ -1,23 +1,21 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-    <h1>Hello world!</h1>
+    <h1>{{ file.name }}</h1>
 
     <div class="row">
         <div class="col-md-6">
             <table>
                 <thead>
                     <tr>
-                        <td>filename</td>
+                        <td>chapter</td>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for file in files %}
+                    {% for chapter in file.children %}
                         <tr>
                             <td>
-                                <a href="{{ path('symfony_doc_synchronizer_default_file', {filename: file.name}) }}"/>
-                                    {{ file.name }}
-                                </a>
+                                {{ chapter.name }}
                             </td>
                         </tr>
                     {% endfor %}
@@ -28,16 +26,14 @@
             <table>
                 <thead>
                     <tr>
-                        <td>filename</td>
+                        <td>chapter</td>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for file in files %}
+                    {% for chapter in file.children %}
                         <tr>
                             <td>
-                                <a href="{{ path('symfony_doc_synchronizer_default_file', {filename: file.name}) }}"/>
-                                    {{ file.name }}
-                                </a>
+                                {{ chapter.name }}
                             </td>
                         </tr>
                     {% endfor %}
