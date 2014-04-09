@@ -60,7 +60,6 @@ class DocumentationParser
             return;
         }
 
-
         $parser = new DocumentParser();
         $parser->parse($file, $blob->getContent());
 
@@ -82,13 +81,23 @@ class DocumentationParser
         $end   = $chapter->getLineEnd();
 
         $max = new \DateTime('1970-01-01');
+        $comm = null;
         for ($i = max(1, $start); $i <= $end; $i++) {
-            $x = $blame->getLine($i)->getCommit()->getCommitterDate();
+            $comm = $blame->getLine($i)->getCommit();
+
+            $x = $comm->getCommitterDate();
             if ($x > $max) {
                 $max = $x;
             }
         }
 
-        $chapter->setLastModification($max);
+        if (!$comm) {
+            throw new \RuntimeException('Error while blaming. : '.$start.'-'.$end);
+        }
+
+        $chapter->getLastModification()->setDate($comm->getCommitterDate());
+        $chapter->getLastModification()->setAuthor($comm->getCommitterName());
+        $chapter->getLastModification()->setMessage($comm->getShortMessage());
+        $chapter->getLastModification()->setHash($comm->getHash());
     }
 }

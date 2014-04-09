@@ -12,3 +12,4 @@ Backlog
 * Generate diff of 2 ASTs
 * Persist the AST with Doctrine
 * Detect and integrate Sphinx errors in AST - http://symfony.com/doc/build_errors
+* Split code blocks and Sphinx directives

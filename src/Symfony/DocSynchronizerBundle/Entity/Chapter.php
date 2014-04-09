@@ -19,6 +19,11 @@ class Chapter extends Node
      */
     private $lastModification;
 
+    public function __construct()
+    {
+        $this->lastModification = new ModificationReference();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -60,19 +65,12 @@ class Chapter extends Node
         return $this->lastModification;
     }
 
-    public function setLastModification(\DateTime $lastModification)
-    {
-        $this->lastModification = $lastModification;
-
-        return $this;
-    }
-
     public function toStringSuffix()
     {
         if (!$this->lastModification) {
             return;
         }
 
-        return '('.$this->lastModification->format('Y-m-d H:i:s').')';
+        return ' ('.$this->lastModification->format('Y-m-d H:i:s').')';
     }
 }
