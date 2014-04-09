@@ -71,6 +71,6 @@ class Chapter extends Node
             return;
         }
 
-        return ' ('.$this->lastModification->format('Y-m-d H:i:s').')';
+        return ' ('.$this->lastModification->getDate()->format('Y-m-d H:i:s').')';
     }
 }
