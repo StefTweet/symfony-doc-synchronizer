@@ -1,0 +1,3 @@
+symfony_doc_synchronizer_default:
+  resource: "@SymfonyDocSynchronizerBundle/Controller/DefaultController.php"
+  type: annotation
