@@ -20,27 +20,27 @@ class DocService
      */
     public function getDocumentation($version, $locale = null)
     {
-        $targetDir = $this->getTarget($version, $locale);
+        $targetDir = $this->getCacheDir($locale);
         if (!is_dir($targetDir)) {
-            $repository = $this->buildTarget($targetDir, $version, $locale);
+            $repository = $this->cloneRepository($targetDir, $locale);
         } else {
             $repository = new Repository($targetDir);
         }
 
         $parser = new DocumentationParser();
 
-        return $parser->parse($repository);
+        return $parser->parse($repository, $version);
     }
 
-    private function getTarget($version, $locale)
+    private function getCacheDir($locale)
     {
-        return $this->cacheDir.'/'.$locale.'_'.$version;
+        return $this->cacheDir.'/'.$locale;
     }
 
     /**
      * @return Repository
      */
-    public function buildTarget($target, $version, $locale)
+    public function cloneRepository($target, $locale)
     {
         $parent = dirname($target);
         if (!is_dir($parent)) {
