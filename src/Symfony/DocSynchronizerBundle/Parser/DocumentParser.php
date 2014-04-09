@@ -23,10 +23,9 @@ class DocumentParser
             self::LEVEL_H5 => 5,
         );
     }
-    public function parse($text)
+    public function parse(File $file, $text)
     {
 
-        $file = new File();
         $previous = $file;
         $previousLevel = 0;
         $previousLine = null;
@@ -44,9 +43,12 @@ class DocumentParser
                     } else {
                         $diff = $previousLevel - $level;
                         for ($i = $previousLevel; $i >= $level; $i--) {
-                            $previous->setLineEnd($lineNumber);
-                            $previous = $previous->getParent();
+                            if ($previous instanceof Chapter) {
+                                $previous->setLineEnd($lineNumber);
+                                $previous = $previous->getParent();
+                            }
                         }
+
                         $previous->addChild($chapter);
                     }
 

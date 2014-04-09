@@ -22,7 +22,7 @@ class Chapter extends Node
     /**
      * {@inheritdoc}
      */
-    public function addChild($child)
+    public function addChild(Node $child)
     {
         if (!$child instanceof Chapter) {
             throw new InvalidTypeException('Chapter', $child);

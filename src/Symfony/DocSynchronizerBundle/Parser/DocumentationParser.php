@@ -7,6 +7,7 @@ use Gitonomy\Git\Repository;
 use Gitonomy\Git\Tree;
 use Symfony\DocSynchronizerBundle\Entity\Directory;
 use Symfony\DocSynchronizerBundle\Entity\File;
+use Symfony\DocSynchronizerBundle\Parser\DocumentParser;
 
 class DocumentationParser
 {
@@ -40,6 +41,7 @@ class DocumentationParser
 
     private function parseDocument(File $file, Blob $blob)
     {
-        // Julien ici
+        $parser = new DocumentParser();
+        $parser->parse($file, $blob->getContent());
     }
 }
