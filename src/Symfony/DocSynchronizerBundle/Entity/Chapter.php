@@ -69,6 +69,10 @@ class Chapter extends Node
 
     public function toStringSuffix()
     {
+        if (!$this->lastModification) {
+            return;
+        }
+
         return '('.$this->lastModification->format('Y-m-d H:i:s').')';
     }
 }

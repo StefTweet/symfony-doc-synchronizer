@@ -54,6 +54,13 @@ class DocumentationParser
 
     private function parseDocument(File $file, Blob $blob, $path)
     {
+        $name = basename($path);
+
+        if (!preg_match('/\.(rst|rst\.inc)$/', $name)) {
+            return;
+        }
+
+
         $parser = new DocumentParser();
         $parser->parse($file, $blob->getContent());
 
@@ -75,7 +82,7 @@ class DocumentationParser
         $end   = $chapter->getLineEnd();
 
         $max = new \DateTime('1970-01-01');
-        for ($i = $start; $i <= $end; $i++) {
+        for ($i = max(1, $start); $i <= $end; $i++) {
             $x = $blame->getLine($i)->getCommit()->getCommitterDate();
             if ($x > $max) {
                 $max = $x;
